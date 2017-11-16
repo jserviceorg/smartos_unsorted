@@ -1,0 +1,23 @@
+<?xml version='1.0'?>
+<!DOCTYPE service_bundle SYSTEM '/usr/share/lib/xml/dtd/service_bundle.dtd.1'>
+<service_bundle type='manifest' name='export'>
+  <service name='system/monit' type='service' version='0'>
+    <create_default_instance enabled='false' />
+    <single_instance />
+    <dependency name='loopback' grouping='require_all' restart_on='error' type='service'>
+      <service_fmri value='svc:/network/loopback:default' />
+    </dependency>
+    <exec_method name='start' type='method' exec='/opt/local/bin/monit -c /opt/local/etc/monit/monitrc' timeout_seconds='30'>
+    </exec_method>
+    <exec_method name='stop' type='method' exec=':kill' timeout_seconds='30' />
+    <stability value='Evolving' />
+    <template>
+      <common_name>
+        <loctext xml:lang='C'>monit</loctext>
+      </common_name>
+      <documentation>
+        <doc_link name='monit' uri='http://mmonit.com' />
+      </documentation>
+    </template>
+  </service>
+</service_bundle>
